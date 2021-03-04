@@ -100,4 +100,13 @@ example(of: "amb operator") {
     
     originalEpisodes.onNext(episodeV)
 }
-
+example(of: "reduce") {
+    let disposeBag = DisposeBag()
+    
+    Observable.from(runtimes.values)
+        .reduce(0, accumulator: +)
+        .subscribe(onNext: {
+            print(stringFrom($0))
+        })
+        .disposed(by: disposeBag)
+}
