@@ -72,7 +72,7 @@ example(of: "merge operator") {
     filmTrylogy.onNext(episodeIV)
 }
 
-example(of: "Cobine Latest") {
+example(of: "Cobine Latest operator") {
     let disposeBag = DisposeBag()
     
     let characters = Observable.of("luke", "hashSolo", "leia", "chewbacca")
@@ -86,7 +86,7 @@ example(of: "Cobine Latest") {
     .disposed(by: disposeBag)
 }
 
-example(of: "zip") {
+example(of: "zip operator") {
     let disposeBag = DisposeBag()
     
     let characters = Observable.of("luke", "hashSolo", "leia", "chewbacca")
@@ -98,4 +98,24 @@ example(of: "zip") {
         print($0)
     })
     .disposed(by: disposeBag)
+}
+
+example(of: "amb operator") {
+    let disposeBag = DisposeBag()
+    
+    let prequelEpisodes = PublishSubject<String>()
+    let originalEpisodes = PublishSubject<String>()
+    
+    prequelEpisodes.amb(originalEpisodes)
+        .subscribe(onNext: {
+            print($0)
+        })
+        .disposed(by: disposeBag)
+    
+    originalEpisodes.onNext(episodeIV)
+
+    prequelEpisodes.onNext(episodeI)
+    prequelEpisodes.onNext(episodeII)
+    
+    originalEpisodes.onNext(episodeV)
 }
