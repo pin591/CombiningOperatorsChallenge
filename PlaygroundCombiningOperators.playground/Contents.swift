@@ -56,8 +56,8 @@ example(of: "merge operator") {
 example(of: "Cobine Latest operator") {
     let disposeBag = DisposeBag()
     
-    let characters = Observable.of("luke", "hashSolo", "leia", "chewbacca")
-    let primaryWeapons = Observable.of("lightaber", "dl44", "defender", "bowcaster")
+    let characters = Observable.of(luke, hanSolo, leia, chewbacca)
+    let primaryWeapons = Observable.of(lightsaber, dl44, defender, bowcaster)
     
     Observable.combineLatest(characters, primaryWeapons) { character, weapons in
         "\(character): \(weapons)"
@@ -70,8 +70,8 @@ example(of: "Cobine Latest operator") {
 example(of: "zip operator") {
     let disposeBag = DisposeBag()
     
-    let characters = Observable.of("luke", "hashSolo", "leia", "chewbacca")
-    let primaryWeapons = Observable.of("lightaber", "dl44", "defender", "bowcaster")
+    let characters = Observable.of(luke, hanSolo, leia, chewbacca)
+    let primaryWeapons = Observable.of(lightsaber, dl44, defender, bowcaster)
     
     Observable.zip(characters, primaryWeapons) { character, weapons in
         "\(character): \(weapons)"
@@ -100,3 +100,4 @@ example(of: "amb operator") {
     
     originalEpisodes.onNext(episodeV)
 }
+
