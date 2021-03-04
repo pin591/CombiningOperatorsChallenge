@@ -100,11 +100,22 @@ example(of: "amb operator") {
     
     originalEpisodes.onNext(episodeV)
 }
-example(of: "reduce") {
+example(of: "reduce operator") {
     let disposeBag = DisposeBag()
     
     Observable.from(runtimes.values)
         .reduce(0, accumulator: +)
+        .subscribe(onNext: {
+            print(stringFrom($0))
+        })
+        .disposed(by: disposeBag)
+}
+
+example(of: "scan operator") {
+    let disposeBag = DisposeBag()
+    
+    Observable.from(runtimes.values)
+        .scan(0, accumulator: +)
         .subscribe(onNext: {
             print(stringFrom($0))
         })
