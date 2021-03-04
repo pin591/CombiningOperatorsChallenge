@@ -45,3 +45,57 @@ example(of: "concat operator") {
         })
         .disposed(by: disposeBag)
 }
+
+example(of: "merge operator") {
+    let disposeBag = DisposeBag()
+
+    let filmTrylogy = PublishSubject<String>()
+    let standaloneFilms = PublishSubject<String>()
+    let storyOrder = Observable.of(filmTrylogy,standaloneFilms)
+    
+    storyOrder.merge()
+        .subscribe(onNext: { episode in
+            print(episode)
+        })
+        .disposed(by: disposeBag)
+    
+    filmTrylogy.onNext(episodeI)
+    filmTrylogy.onNext(episodeII)
+    
+    standaloneFilms.onNext(theCloneWars)
+    
+    filmTrylogy.onNext(episodeIII)
+    
+    standaloneFilms.onNext(solo)
+    standaloneFilms.onNext(rogueOne)
+    
+    filmTrylogy.onNext(episodeIV)
+}
+
+example(of: "Cobine Latest") {
+    let disposeBag = DisposeBag()
+    
+    let characters = Observable.of("luke", "hashSolo", "leia", "chewbacca")
+    let primaryWeapons = Observable.of("lightaber", "dl44", "defender", "bowcaster")
+    
+    Observable.combineLatest(characters, primaryWeapons) { character, weapons in
+        "\(character): \(weapons)"
+    }.subscribe(onNext: {
+        print($0)
+    })
+    .disposed(by: disposeBag)
+}
+
+example(of: "zip") {
+    let disposeBag = DisposeBag()
+    
+    let characters = Observable.of("luke", "hashSolo", "leia", "chewbacca")
+    let primaryWeapons = Observable.of("lightaber", "dl44", "defender", "bowcaster")
+    
+    Observable.zip(characters, primaryWeapons) { character, weapons in
+        "\(character): \(weapons)"
+    }.subscribe(onNext: {
+        print($0)
+    })
+    .disposed(by: disposeBag)
+}
