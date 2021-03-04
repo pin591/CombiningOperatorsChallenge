@@ -22,12 +22,26 @@ public func example(of description: String, action: () -> Void) {
 
 example(of: "start with operator") {
     let disposeBag = DisposeBag()
+    
     let prequelEpisode = Observable.of(episodeI,episodeII,episodeIII)
     let flashbag = prequelEpisode.startWith(episodeIV,episodeV)
     
     flashbag
         .subscribe(onNext: { episode in
                    print(episode)
+        })
+        .disposed(by: disposeBag)
+}
+
+example(of: "concat operator") {
+    let disposeBag = DisposeBag()
+
+    let prequelTrylogy = Observable.of(episodeI,episodeII,episodeIII)
+    let originalTrylogy = Observable.of(episodeIV,episodeV,episodeVI)
+    
+    prequelTrylogy.concat(originalTrylogy)
+        .subscribe(onNext: { episode in
+            print(episode)
         })
         .disposed(by: disposeBag)
 }
